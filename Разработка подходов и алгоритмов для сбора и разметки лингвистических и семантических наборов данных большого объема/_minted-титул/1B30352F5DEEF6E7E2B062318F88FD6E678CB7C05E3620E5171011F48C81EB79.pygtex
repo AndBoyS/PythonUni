@@ -1,0 +1,29 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{keras.layers} \PYG{k+kn}{import} \PYG{n}{Input}\PYG{p}{,} \PYG{n}{Concatenate}\PYG{p}{,} \PYG{n}{Flatten}\PYG{p}{,} \PYG{n}{Dense}
+\PYG{k+kn}{from} \PYG{n+nn}{keras.models} \PYG{k+kn}{import} \PYG{n}{Model}
+
+\PYG{n}{loss} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}categorical\PYGZus{}crossentropy\PYGZsq{}}
+\PYG{n}{activation} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}softmax\PYGZsq{}}
+\PYG{n}{filters}\PYG{p}{,} \PYG{n}{kernel\PYGZus{}size} \PYG{o}{=} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{5}
+
+\PYG{n}{text\PYGZus{}input} \PYG{o}{=} \PYG{n}{Input}\PYG{p}{(}\PYG{n}{shape}\PYG{o}{=}\PYG{p}{(}\PYG{n}{max\PYGZus{}len}\PYG{p}{,))}
+\PYG{n}{vector\PYGZus{}input} \PYG{o}{=} \PYG{n}{Input}\PYG{p}{(}\PYG{n}{shape}\PYG{o}{=}\PYG{p}{(}\PYG{n}{other\PYGZus{}features\PYGZus{}train}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],))}
+
+\PYG{n}{embedding\PYGZus{}layer} \PYG{o}{=} \PYG{n}{Embedding}\PYG{p}{(}\PYG{n}{input\PYGZus{}dim}\PYG{o}{=}\PYG{n}{vocab\PYGZus{}size}\PYG{p}{,}
+                            \PYG{n}{output\PYGZus{}dim}\PYG{o}{=}\PYG{n}{number\PYGZus{}of\PYGZus{}dimensions}\PYG{p}{,}
+                            \PYG{n}{weights}\PYG{o}{=}\PYG{p}{[}\PYG{n}{embedding\PYGZus{}matrix}\PYG{p}{],}
+                            \PYG{n}{input\PYGZus{}length}\PYG{o}{=}\PYG{n}{max\PYGZus{}len}\PYG{p}{,}
+                            \PYG{n}{trainable}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,}
+                            \PYG{n}{embeddings\PYGZus{}regularizer}\PYG{o}{=}\PYG{n}{reg}\PYG{o}{.}\PYG{n}{l1}\PYG{p}{(}\PYG{l+m+mf}{0.0005}\PYG{p}{))(}\PYG{n}{text\PYGZus{}input}\PYG{p}{)}
+\PYG{n}{conv\PYGZus{}layer} \PYG{o}{=} \PYG{n}{Conv1D}\PYG{p}{(}\PYG{n}{filters}\PYG{p}{,} \PYG{n}{kernel\PYGZus{}size}\PYG{p}{,} \PYG{n}{activation}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}relu\PYGZsq{}}\PYG{p}{,} \PYG{n}{kernel\PYGZus{}regularizer}\PYG{o}{=}\PYG{n}{reg}\PYG{o}{.}\PYG{n}{l2}\PYG{p}{(}\PYG{l+m+mf}{0.005}\PYG{p}{))(}\PYG{n}{embedding\PYGZus{}layer}\PYG{p}{)}
+\PYG{n}{conv\PYGZus{}layer} \PYG{o}{=} \PYG{n}{Dropout}\PYG{p}{(}\PYG{l+m+mf}{0.2}\PYG{p}{)(}\PYG{n}{conv\PYGZus{}layer}\PYG{p}{)}
+\PYG{n}{conv\PYGZus{}layer} \PYG{o}{=} \PYG{n}{MaxPooling1D}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{)(}\PYG{n}{conv\PYGZus{}layer}\PYG{p}{)}
+\PYG{n}{conv\PYGZus{}layer} \PYG{o}{=} \PYG{n}{GlobalMaxPooling1D}\PYG{p}{()(}\PYG{n}{conv\PYGZus{}layer}\PYG{p}{)}
+
+\PYG{n}{concat\PYGZus{}layer} \PYG{o}{=} \PYG{n}{Concatenate}\PYG{p}{()([}\PYG{n}{vector\PYGZus{}input}\PYG{p}{,} \PYG{n}{conv\PYGZus{}layer}\PYG{p}{])}
+\PYG{n}{output} \PYG{o}{=} \PYG{n}{Dense}\PYG{p}{(}\PYG{n}{output\PYGZus{}number}\PYG{p}{,} \PYG{n}{activation}\PYG{o}{=}\PYG{n}{activation}\PYG{p}{)(}\PYG{n}{concat\PYGZus{}layer}\PYG{p}{)}
+
+\PYG{n}{model} \PYG{o}{=} \PYG{n}{Model}\PYG{p}{(}\PYG{n}{inputs}\PYG{o}{=}\PYG{p}{[}\PYG{n}{text\PYGZus{}input}\PYG{p}{,} \PYG{n}{vector\PYGZus{}input}\PYG{p}{],} \PYG{n}{outputs}\PYG{o}{=}\PYG{n}{output}\PYG{p}{)}
+\PYG{n}{model}\PYG{o}{.}\PYG{n}{compile}\PYG{p}{(}\PYG{n}{optimizer}\PYG{o}{=}\PYG{n}{Adam}\PYG{p}{(}\PYG{n}{learning\PYGZus{}rate}\PYG{o}{=}\PYG{l+m+mf}{0.01}\PYG{p}{),} \PYG{n}{loss}\PYG{o}{=}\PYG{n}{loss}\PYG{p}{,} \PYG{n}{metrics}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}acc\PYGZsq{}}\PYG{p}{,}\PYG{n}{f1\PYGZus{}micro}\PYG{p}{,}\PYG{n}{f1\PYGZus{}weighted}\PYG{p}{])}
+\PYG{n}{model}\PYG{o}{.}\PYG{n}{summary}\PYG{p}{()}
+\end{Verbatim}

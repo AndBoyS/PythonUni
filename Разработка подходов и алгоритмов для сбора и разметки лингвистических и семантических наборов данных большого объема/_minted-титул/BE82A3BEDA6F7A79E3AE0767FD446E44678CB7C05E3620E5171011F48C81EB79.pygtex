@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{cleaned\PYGZus{}train\PYGZus{}data} \PYG{o}{=} \PYG{n}{train\PYGZus{}data}\PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}purp\PYGZsq{}}\PYG{p}{,}\PYG{n}{target\PYGZus{}name}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+\PYG{n}{stop\PYGZus{}words} \PYG{o}{=} \PYG{n}{stopwords}\PYG{o}{.}\PYG{n}{words}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}russian\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{cleaned\PYGZus{}train\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}purp\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{sentence}\PYG{p}{)} \PYG{k}{for} \PYG{n}{sentence} \PYG{o+ow}{in} \PYG{n}{get\PYGZus{}cleaned\PYGZus{}features}\PYG{p}{(}\PYG{n}{train\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}purp\PYGZsq{}}\PYG{p}{],} \PYG{n}{stop\PYGZus{}words}\PYG{p}{)]}
+\PYG{n}{train\PYGZus{}ngrams} \PYG{o}{=} \PYG{n}{utils}\PYG{o}{.}\PYG{n}{NGramsCounter}\PYG{p}{(}\PYG{n}{cleaned\PYGZus{}train\PYGZus{}data}\PYG{p}{)}\PYG{o}{.}\PYG{n}{choose\PYGZus{}significant\PYGZus{}ngrams}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{9}\PYG{p}{,} \PYG{l+m+mf}{0.7}\PYG{p}{)}
+
+\PYG{n}{cleaned\PYGZus{}test\PYGZus{}data} \PYG{o}{=} \PYG{n}{test\PYGZus{}data}\PYG{p}{[[}\PYG{l+s+s1}{\PYGZsq{}purp\PYGZsq{}}\PYG{p}{,}\PYG{n}{target\PYGZus{}name}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
+\PYG{n}{cleaned\PYGZus{}test\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}purp\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{sentence}\PYG{p}{)} \PYG{k}{for} \PYG{n}{sentence} \PYG{o+ow}{in} \PYG{n}{get\PYGZus{}cleaned\PYGZus{}features}\PYG{p}{(}\PYG{n}{test\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}purp\PYGZsq{}}\PYG{p}{],} \PYG{n}{stop\PYGZus{}words}\PYG{p}{)]}
+\PYG{n}{test\PYGZus{}ngrams} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([[}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{ngram} \PYG{o+ow}{in} \PYG{n}{sentence}\PYG{p}{)} \PYG{k}{for} \PYG{n}{ngram} \PYG{o+ow}{in} \PYG{n}{train\PYGZus{}ngrams}\PYG{o}{.}\PYG{n}{columns}\PYG{p}{]} \PYG{k}{for} \PYG{n}{sentence} \PYG{o+ow}{in} \PYG{n}{cleaned\PYGZus{}test\PYGZus{}data}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}purp\PYGZsq{}}\PYG{p}{]])}
+\end{Verbatim}

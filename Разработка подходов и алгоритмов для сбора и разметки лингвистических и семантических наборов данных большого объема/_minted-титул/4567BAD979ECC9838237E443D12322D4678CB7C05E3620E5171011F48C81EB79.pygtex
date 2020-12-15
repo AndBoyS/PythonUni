@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{def} \PYG{n+nf}{load\PYGZus{}data}\PYG{p}{(}\PYG{n}{path}\PYG{p}{):}
+  \PYG{n}{data} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{read\PYGZus{}csv}\PYG{p}{(}\PYG{n}{path}\PYG{p}{)}
+  \PYG{n}{data}\PYG{o}{.}\PYG{n}{rename}\PYG{p}{(\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}Ответ 2 из 3:\PYGZsq{}}\PYG{p}{:}\PYG{l+s+s1}{\PYGZsq{}class\PYGZsq{}}\PYG{p}{\PYGZcb{},} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{inplace}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{)}
+  \PYG{k}{return} \PYG{n}{data}
+
+\PYG{n}{train\PYGZus{}path} \PYG{o}{=} \PYG{n}{get\PYGZus{}drive\PYGZus{}path}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s+s1}{train\PYGZus{}data\PYGZus{}3300\PYGZus{}win.txt\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{test\PYGZus{}path} \PYG{o}{=} \PYG{n}{get\PYGZus{}drive\PYGZus{}path}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s+s1}{test\PYGZus{}data\PYGZus{}3300\PYGZus{}win.txt\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{train\PYGZus{}data} \PYG{o}{=} \PYG{n}{load\PYGZus{}data}\PYG{p}{(}\PYG{n}{train\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{test\PYGZus{}data} \PYG{o}{=} \PYG{n}{load\PYGZus{}data}\PYG{p}{(}\PYG{n}{test\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{all\PYGZus{}data} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{concat}\PYG{p}{((}\PYG{n}{train\PYGZus{}data}\PYG{p}{,} \PYG{n}{test\PYGZus{}data}\PYG{p}{))}
+\end{Verbatim}
