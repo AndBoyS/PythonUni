@@ -1,6 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{prediction} \PYG{o}{=} \PYG{n}{classifier\PYGZus{}svm}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{test\PYGZus{}vectors}\PYG{p}{)}
-
-\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}f1 micro:\PYGZsq{}}\PYG{p}{,} \PYG{n}{f1\PYGZus{}score}\PYG{p}{(}\PYG{n}{test\PYGZus{}data}\PYG{p}{[}\PYG{n}{target\PYGZus{}name}\PYG{p}{],} \PYG{n}{prediction}\PYG{p}{,} \PYG{n}{average}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}micro\PYGZsq{}}\PYG{p}{))}
-\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}f1 weighted:\PYGZsq{}}\PYG{p}{,} \PYG{n}{f1\PYGZus{}score}\PYG{p}{(}\PYG{n}{test\PYGZus{}data}\PYG{p}{[}\PYG{n}{target\PYGZus{}name}\PYG{p}{],} \PYG{n}{prediction}\PYG{p}{,} \PYG{n}{average}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}weighted\PYGZsq{}}\PYG{p}{))}
-\end{Verbatim}
